@@ -1,7 +1,7 @@
 Summary: A GNU collection of diff utilities.
 Name: diffutils
 Version: 2.8.1
-Release: 9
+Release: 10
 Group: Applications/Text
 URL: http://www.gnu.org/software/diffutils/diffutils.html
 Source: ftp://ftp.gnu.org/gnu/diffutils/diffutils-%{version}.tar.gz
@@ -10,6 +10,7 @@ Source2: diff.1
 Source3: diff3.1
 Source4: sdiff.1
 Patch0: diffutils-2.8.4-i18n.patch
+Patch1: diffutils-2.8.1-badc.patch
 License: GPL
 Prefix: %{_prefix}
 Prereq: /sbin/install-info
@@ -31,6 +32,7 @@ Install diffutils if you need to compare text files.
 %prep
 %setup -q
 %patch0 -p1 -b .i18n
+%patch1 -p1 -b .badc
 
 %build
 %configure
@@ -72,6 +74,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_infodir}/diff.info*gz
 
 %changelog
+* Thu Jan  8 2004 Tim Waugh <twaugh@redhat.com> 2.8.1-10
+- Fix mistaken use of '|' instead of '||'.
+
 * Sat Oct 25 2003 Tim Waugh <twaugh@redhat.com> 2.8.1-9
 - Rebuilt.
 
