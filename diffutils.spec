@@ -11,6 +11,7 @@ Source3: diff3.1
 Source4: sdiff.1
 Patch0: diffutils-2.8.4-i18n.patch
 Patch1: diffutils-2.8.1-badc.patch
+Patch2: diffutils-sdiff.patch
 License: GPL
 Prefix: %{_prefix}
 Prereq: /sbin/install-info
@@ -33,6 +34,7 @@ Install diffutils if you need to compare text files.
 %setup -q
 %patch0 -p1 -b .i18n
 %patch1 -p1 -b .badc
+%patch2 -p1 -b .sdiff
 
 %build
 %configure
@@ -74,6 +76,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_infodir}/diff.info*gz
 
 %changelog
+* Wed Apr  6 2005 Tim Waugh <twaugh@redhat.com>
+- Fixed sdiff exit code handling (bug #152967).
+
 * Wed Mar  2 2005 Tim Waugh <twaugh@redhat.com> 2.8.1-14
 - Rebuild for new GCC.
 
