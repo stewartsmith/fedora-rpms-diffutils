@@ -1,7 +1,7 @@
 Summary: A GNU collection of diff utilities.
 Name: diffutils
-Version: 2.7.2
-Release: 5
+Version: 2.8.1
+Release: 2
 Group: Applications/Text
 URL: http://www.gnu.org/software/diffutils/diffutils.html
 Source: ftp://ftp.gnu.org/gnu/diffutils/diffutils-%{version}.tar.gz
@@ -30,10 +30,8 @@ Install diffutils if you need to compare text files.
 
 %prep
 %setup -q
-%patch0 -p1 -b .immunix-owl-tmp
 
 %build
-autoconf
 %configure
 make PR_PROGRAM=%{_bindir}/pr
 
@@ -70,6 +68,13 @@ rm -rf $RPM_BUILD_ROOT
 %{_infodir}/diff.info*gz
 
 %changelog
+* Thu May 23 2002 Tim Powers <timp@redhat.com>
+- automated rebuild
+
+* Mon Apr 22 2002 Tim Waugh <twaugh@redhat.com> 2.8.1-1
+- 2.8.1.
+- No longer need immunix-owl-tmp patch.
+
 * Wed Feb 27 2002 Tim Waugh <twaugh@redhat.com> 2.7.2-5
 - Rebuild in new environment.
 
