@@ -1,7 +1,7 @@
 Summary: A GNU collection of diff utilities.
 Name: diffutils
 Version: 2.7.2
-Release: 2
+Release: 5
 Group: Applications/Text
 URL: http://www.gnu.org/software/diffutils/diffutils.html
 Source: ftp://ftp.gnu.org/gnu/diffutils/diffutils-%{version}.tar.gz
@@ -52,6 +52,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %post
 /sbin/install-info %{_infodir}/diff.info.gz %{_infodir}/dir --entry="* diff: (diff).                 The GNU diff."
+exit 0
 
 %preun
 if [ $1 = 0 ]; then
@@ -69,6 +70,15 @@ rm -rf $RPM_BUILD_ROOT
 %{_infodir}/diff.info*gz
 
 %changelog
+* Wed Feb 27 2002 Tim Waugh <twaugh@redhat.com> 2.7.2-5
+- Rebuild in new environment.
+
+* Wed Jan 09 2002 Tim Powers <timp@redhat.com>
+- automated rebuild
+
+* Fri Nov 02 2001 Tim Waugh <twaugh@redhat.com> 2.7.2-3
+- Make sure %%post scriplet doesn't fail if --excludedocs is used.
+
 * Fri Jun 01 2001 Tim Waugh <twaugh@redhat.com> 2.7.2-2
 - Install diff.1, since it's no longer in man-pages.
 
