@@ -1,7 +1,7 @@
 Summary: A GNU collection of diff utilities.
 Name: diffutils
 Version: 2.8.1
-Release: 13
+Release: 14
 Group: Applications/Text
 URL: http://www.gnu.org/software/diffutils/diffutils.html
 Source: ftp://ftp.gnu.org/gnu/diffutils/diffutils-%{version}.tar.gz
@@ -74,6 +74,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_infodir}/diff.info*gz
 
 %changelog
+* Wed Mar  2 2005 Tim Waugh <twaugh@redhat.com> 2.8.1-14
+- Rebuild for new GCC.
+
 * Wed Feb  9 2005 Tim Waugh <twaugh@redhat.com> 2.8.1-13
 - Rebuilt.
 
