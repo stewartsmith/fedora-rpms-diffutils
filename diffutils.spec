@@ -1,7 +1,7 @@
 Summary: A GNU collection of diff utilities.
 Name: diffutils
-Version: 2.7
-Release: 23
+Version: 2.7.2
+Release: 2
 Group: Applications/Text
 URL: http://www.gnu.org/software/diffutils/diffutils.html
 Source: ftp://ftp.gnu.org/gnu/diffutils/diffutils-%{version}.tar.gz
@@ -9,7 +9,7 @@ Source1: cmp.1
 Source2: diff.1
 Source3: diff3.1
 Source4: sdiff.1
-Patch0: diffutils-2.7-immunix-owl-tmp.patch
+Patch0: diffutils-2.7.2-immunix-owl-tmp.patch
 License: GPL
 Prefix: %{_prefix}
 Prereq: /sbin/install-info
@@ -44,7 +44,7 @@ rm -rf $RPM_BUILD_ROOT
 ( cd $RPM_BUILD_ROOT
   gzip -9nf .%{_infodir}/diff*
   mkdir -p .%{_mandir}/man1
-  for manpage in %{SOURCE1} %{SOURCE3} %{SOURCE4}
+  for manpage in %{SOURCE1} %{SOURCE2} %{SOURCE3} %{SOURCE4}
   do
     install -m 0644 ${manpage} .%{_mandir}/man1
   done
@@ -69,8 +69,11 @@ rm -rf $RPM_BUILD_ROOT
 %{_infodir}/diff.info*gz
 
 %changelog
-* Wed Sep 26 2001 Tim Waugh <twaugh@redhat.com>
-- Fix temporary file handling vulnerability in sdiff.
+* Fri Jun 01 2001 Tim Waugh <twaugh@redhat.com> 2.7.2-2
+- Install diff.1, since it's no longer in man-pages.
+
+* Fri Mar 30 2001 Tim Waugh <twaugh@redhat.com> 2.7.2-1
+- 2.7.2.
 
 * Wed Jul 12 2000 Prospector <bugzilla@redhat.com>
 - automatic rebuild
