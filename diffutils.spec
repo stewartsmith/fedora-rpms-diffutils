@@ -1,7 +1,7 @@
 Summary: A GNU collection of diff utilities.
 Name: diffutils
 Version: 2.7
-Release: 22
+Release: 23
 Group: Applications/Text
 URL: http://www.gnu.org/software/diffutils/diffutils.html
 Source: ftp://ftp.gnu.org/gnu/diffutils/diffutils-%{version}.tar.gz
@@ -9,6 +9,7 @@ Source1: cmp.1
 Source2: diff.1
 Source3: diff3.1
 Source4: sdiff.1
+Patch0: diffutils-2.7-immunix-owl-tmp.patch
 License: GPL
 Prefix: %{_prefix}
 Prereq: /sbin/install-info
@@ -29,6 +30,7 @@ Install diffutils if you need to compare text files.
 
 %prep
 %setup -q
+%patch0 -p1 -b .immunix-owl-tmp
 
 %build
 autoconf
@@ -67,6 +69,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_infodir}/diff.info*gz
 
 %changelog
+* Wed Sep 26 2001 Tim Waugh <twaugh@redhat.com>
+- Fix temporary file handling vulnerability in sdiff.
+
 * Wed Jul 12 2000 Prospector <bugzilla@redhat.com>
 - automatic rebuild
 
