@@ -1,7 +1,7 @@
 Summary: A GNU collection of diff utilities.
 Name: diffutils
 Version: 2.8.1
-Release: 3
+Release: 6
 Group: Applications/Text
 URL: http://www.gnu.org/software/diffutils/diffutils.html
 Source: ftp://ftp.gnu.org/gnu/diffutils/diffutils-%{version}.tar.gz
@@ -9,7 +9,7 @@ Source1: cmp.1
 Source2: diff.1
 Source3: diff3.1
 Source4: sdiff.1
-Patch0: diffutils-2.7.2-immunix-owl-tmp.patch
+Patch0: diffutils-2.8.4-i18n.patch
 License: GPL
 Prefix: %{_prefix}
 Prereq: /sbin/install-info
@@ -30,6 +30,7 @@ Install diffutils if you need to compare text files.
 
 %prep
 %setup -q
+%patch0 -p1 -b .i18n
 
 %build
 %configure
@@ -48,6 +49,9 @@ rm -rf $RPM_BUILD_ROOT
   done
 )
 
+rm -f $RPM_BUILD_ROOT%{_infodir}/dir
+%find_lang %{name}
+
 %post
 /sbin/install-info %{_infodir}/diff.info.gz %{_infodir}/dir --entry="* diff: (diff).                 The GNU diff."
 exit 0
@@ -60,7 +64,7 @@ fi
 %clean
 rm -rf $RPM_BUILD_ROOT
 
-%files
+%files -f %{name}.lang
 %defattr(-,root,root)
 %doc NEWS README
 %{_bindir}/*
@@ -68,6 +72,15 @@ rm -rf $RPM_BUILD_ROOT
 %{_infodir}/diff.info*gz
 
 %changelog
+* Wed Jan 22 2003 Tim Powers <timp@redhat.com>
+- rebuilt
+
+* Tue Nov 19 2002 Tim Waugh <twaugh@redhat.com> 2.8.1-5
+- i18n patch.
+
+* Tue Oct 22 2002 Tim Waugh <twaugh@redhat.com> 2.8.1-4
+- Ship translations.
+
 * Fri Jun 21 2002 Tim Powers <timp@redhat.com>
 - automated rebuild
 
