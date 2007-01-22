@@ -1,7 +1,7 @@
 Summary: A GNU collection of diff utilities.
 Name: diffutils
 Version: 2.8.1
-Release: 15.2.2
+Release: 16%{?dist}
 Group: Applications/Text
 URL: http://www.gnu.org/software/diffutils/diffutils.html
 Source: ftp://ftp.gnu.org/gnu/diffutils/diffutils-%{version}.tar.gz
@@ -64,6 +64,7 @@ exit 0
 if [ $1 = 0 ]; then
     /sbin/install-info --delete %{_infodir}/diff.info.gz %{_infodir}/dir --entry="* diff: (diff).                 The GNU diff."
 fi
+exit 0
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -76,6 +77,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_infodir}/diff.info*gz
 
 %changelog
+* Mon Jan 22 2007 Tim Waugh <twaugh@redhat.com> 2.8.1-16
+- Make scriptlet unconditionally succeed (bug #223683).
+
 * Wed Jul 12 2006 Jesse Keating <jkeating@redhat.com> - 2.8.1-15.2.2
 - rebuild
 
