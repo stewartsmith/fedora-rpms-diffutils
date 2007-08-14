@@ -1,6 +1,6 @@
---- diffutils-2.8.4/src/diff.c.i18n	2002-06-17 01:55:42.000000000 -0400
-+++ diffutils-2.8.4/src/diff.c	2002-11-16 18:41:37.000000000 -0500
-@@ -275,6 +275,13 @@
+--- diffutils-2.8.1/src/diff.c.i18n	2002-03-24 07:35:28.000000000 +0000
++++ diffutils-2.8.1/src/diff.c	2007-08-14 10:39:40.000000000 +0100
+@@ -273,6 +273,13 @@
    re_set_syntax (RE_SYNTAX_GREP | RE_NO_POSIX_BACKTRACKING);
    excluded = new_exclude ();
  
@@ -14,11 +14,11 @@
    /* Decode the options.  */
  
    while ((c = getopt_long (argc, argv, shortopts, longopts, 0)) != -1)
---- diffutils-2.8.4/src/diff.h.i18n	2002-11-16 18:31:32.000000000 -0500
-+++ diffutils-2.8.4/src/diff.h	2002-11-16 18:48:58.000000000 -0500
-@@ -23,6 +23,19 @@
- #include "system.h"
- #include <stdio.h>
+--- diffutils-2.8.1/src/diff.h.i18n	2002-03-11 21:24:42.000000000 +0000
++++ diffutils-2.8.1/src/diff.h	2007-08-14 10:41:21.000000000 +0100
+@@ -25,6 +25,19 @@
+ 
+ #define TAB_WIDTH 8
  
 +/* For platform which support the ISO C amendement 1 functionality we
 +   support user defined character classes.  */
@@ -36,24 +36,24 @@
  /* What kind of changes a hunk contains.  */
  enum changes
  {
-@@ -350,7 +363,13 @@
+@@ -349,7 +362,13 @@
  extern char const pr_program[];
  char *concat (char const *, char const *, char const *);
  char *dir_file_pathname (char const *, char const *);
 -bool lines_differ (char const *, char const *);
 +
-+bool (*lines_differ) (char const *, char const *);
-+bool lines_differ_singlebyte (char const *, char const *);
++bool (*lines_differ) (char const *, size_t, char const *, size_t);
++bool lines_differ_singlebyte (char const *, size_t, char const *, size_t);
 +#ifdef HANDLE_MULTIBYTE
-+bool lines_differ_multibyte (char const *, char const *);
++bool lines_differ_multibyte (char const *, size_t, char const *, size_t);
 +#endif
 +
  lin translate_line_number (struct file_data const *, lin);
  struct change *find_change (struct change *);
  struct change *find_reverse_change (struct change *);
---- diffutils-2.8.4/src/io.c.i18n	2002-06-11 02:06:32.000000000 -0400
-+++ diffutils-2.8.4/src/io.c	2002-11-16 18:57:30.000000000 -0500
-@@ -26,6 +26,7 @@
+--- diffutils-2.8.1/src/io.c.i18n	2002-03-25 04:58:36.000000000 +0000
++++ diffutils-2.8.1/src/io.c	2007-08-14 10:40:05.000000000 +0100
+@@ -25,6 +25,7 @@
  #include <regex.h>
  #include <setmode.h>
  #include <xalloc.h>
@@ -61,7 +61,7 @@
  
  /* Rotate an unsigned value to the left.  */
  #define ROL(v, n) ((v) << (n) | (v) >> (sizeof (v) * CHAR_BIT - (n)))
-@@ -213,6 +214,28 @@
+@@ -212,6 +213,28 @@
  
  /* Split the file into lines, simultaneously computing the equivalence
     class for each line.  */
@@ -90,7 +90,7 @@
  
  static void
  find_and_hash_each_line (struct file_data *current)
-@@ -239,12 +262,280 @@
+@@ -238,12 +261,280 @@
    bool same_length_diff_contents_compare_anyway =
      diff_length_compare_anyway | ignore_case;
  
@@ -371,10 +371,19 @@
        /* Hash this line until we find a newline.  */
        if (ignore_case)
  	switch (ignore_white_space)
---- diffutils-2.8.4/src/side.c.i18n	2002-06-11 02:06:32.000000000 -0400
-+++ diffutils-2.8.4/src/side.c	2002-11-16 18:41:37.000000000 -0500
-@@ -73,11 +73,72 @@
-   register size_t out_position = 0;
+@@ -438,7 +729,7 @@
+ 	    else if (!diff_length_compare_anyway)
+ 	      continue;
+ 
+-	    if (! lines_differ (eqline, ip))
++	    if (! lines_differ (eqline, eqs[i].length, ip, length))
+ 	      break;
+ 	  }
+ 
+--- diffutils-2.8.1/src/side.c.i18n	2002-02-07 18:17:04.000000000 +0000
++++ diffutils-2.8.1/src/side.c	2007-08-14 10:39:40.000000000 +0100
+@@ -74,11 +74,72 @@
+   register unsigned int out_position = 0;
    register char const *text_pointer = line[0];
    register char const *text_limit = line[1];
 +#if defined HAVE_WCHAR_H && defined HAVE_WCTYPE_H
@@ -446,7 +455,7 @@
        switch (c)
  	{
  	case '\t':
-@@ -135,8 +196,39 @@
+@@ -136,8 +197,39 @@
  	  break;
  
  	default:
@@ -488,18 +497,19 @@
  	  /* falls through */
  	case ' ':
  	  if (in_position++ < out_bound)
---- diffutils-2.8.4/src/util.c.i18n	2002-06-11 02:06:32.000000000 -0400
-+++ diffutils-2.8.4/src/util.c	2002-11-16 18:41:37.000000000 -0500
-@@ -321,7 +321,7 @@
+--- diffutils-2.8.1/src/util.c.i18n	2002-02-28 04:23:10.000000000 +0000
++++ diffutils-2.8.1/src/util.c	2007-08-14 10:42:19.000000000 +0100
+@@ -312,7 +312,8 @@
     Return nonzero if the lines differ.  */
  
  bool
 -lines_differ (char const *s1, char const *s2)
-+lines_differ_singlebyte (char const *s1, char const *s2)
++lines_differ_singlebyte (char const *s1, size_t s1len,
++			 char const *s2, size_t s2len)
  {
    register unsigned char const *t1 = (unsigned char const *) s1;
    register unsigned char const *t2 = (unsigned char const *) s2;
-@@ -450,6 +450,293 @@
+@@ -441,6 +442,294 @@
  
    return 1;
  }
@@ -527,7 +537,8 @@
 +while (0)
 +
 +bool
-+lines_differ_multibyte (char const *s1, char const *s2)
++lines_differ_multibyte (char const *s1, size_t s1len,
++			char const *s2, size_t s2len)
 +{
 +  unsigned char const *end1, *end2;
 +  unsigned char c1, c2;
@@ -552,8 +563,8 @@
 +  memset (&state1, '\0', sizeof (mbstate_t));
 +  memset (&state2, '\0', sizeof (mbstate_t));
 +
-+  end1 = s1 + strlen (s1);
-+  end2 = s2 + strlen (s2);
++  end1 = s1 + s1len;
++  end2 = s2 + s2len;
 +
 +  while (1)
 +    {
