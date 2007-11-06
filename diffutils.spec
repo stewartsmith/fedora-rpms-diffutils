@@ -1,7 +1,7 @@
 Summary: A GNU collection of diff utilities.
 Name: diffutils
 Version: 2.8.1
-Release: 18%{?dist}
+Release: 19%{?dist}
 Group: Applications/Text
 URL: http://www.gnu.org/software/diffutils/diffutils.html
 Source: ftp://ftp.gnu.org/gnu/diffutils/diffutils-%{version}.tar.gz
