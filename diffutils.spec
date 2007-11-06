@@ -1,7 +1,7 @@
 Summary: A GNU collection of diff utilities.
 Name: diffutils
 Version: 2.8.1
-Release: 17%{?dist}
+Release: 18%{?dist}
 Group: Applications/Text
 URL: http://www.gnu.org/software/diffutils/diffutils.html
 Source: ftp://ftp.gnu.org/gnu/diffutils/diffutils-%{version}.tar.gz
@@ -77,6 +77,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_infodir}/diff.info*gz
 
 %changelog
+* Tue Nov  6 2007 Tim Waugh <twaugh@redhat.com> 2.8.1-18
+- Fixed multibyte speed improvement patch (bug #363381).
+
 * Tue Aug 14 2007 Tim Waugh <twaugh@redhat.com> 2.8.1-17
 - Multibyte speed improvement (bug #252117).
 

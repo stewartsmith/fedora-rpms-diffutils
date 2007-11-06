@@ -376,7 +376,7 @@
  	      continue;
  
 -	    if (! lines_differ (eqline, ip))
-+	    if (! lines_differ (eqline, eqs[i].length, ip, length))
++	    if (! lines_differ (eqline, eqs[i].length + 1, ip, length + 1))
  	      break;
  	  }
  
