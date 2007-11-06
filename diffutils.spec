@@ -77,8 +77,11 @@ rm -rf $RPM_BUILD_ROOT
 %{_infodir}/diff.info*gz
 
 %changelog
+* Tue Nov  6 2007 Tim Waugh <twaugh@redhat.com> 2.8.1-19
+- Rebuilt.
+
 * Tue Nov  6 2007 Tim Waugh <twaugh@redhat.com> 2.8.1-18
-- Fixed multibyte speed improvement patch (bug #363381).
+- Fixed multibyte speed improvement patch (bug #363831).
 
 * Tue Aug 14 2007 Tim Waugh <twaugh@redhat.com> 2.8.1-17
 - Multibyte speed improvement (bug #252117).
