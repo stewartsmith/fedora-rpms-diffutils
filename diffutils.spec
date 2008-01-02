@@ -1,7 +1,7 @@
-Summary: A GNU collection of diff utilities.
+Summary: A GNU collection of diff utilities
 Name: diffutils
 Version: 2.8.1
-Release: 19%{?dist}
+Release: 20%{?dist}
 Group: Applications/Text
 URL: http://www.gnu.org/software/diffutils/diffutils.html
 Source: ftp://ftp.gnu.org/gnu/diffutils/diffutils-%{version}.tar.gz
@@ -12,10 +12,10 @@ Source4: sdiff.1
 Patch0: diffutils-2.8.4-i18n.patch
 Patch1: diffutils-2.8.1-badc.patch
 Patch2: diffutils-sdiff.patch
-License: GPL
-Prefix: %{_prefix}
-Prereq: /sbin/install-info
-Buildroot: %{_tmppath}/%{name}-%{version}-root
+License: GPLv2+
+Requires(post): /sbin/install-info
+Requires(preun): /sbin/install-info
+BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 %description
 Diffutils includes four utilities: diff, cmp, diff3 and sdiff. Diff
@@ -42,7 +42,7 @@ make PR_PROGRAM=%{_bindir}/pr
 
 %install
 rm -rf $RPM_BUILD_ROOT
-%makeinstall
+make DESTDIR=$RPM_BUILD_ROOT install
 
 ( cd $RPM_BUILD_ROOT
   gzip -9nf .%{_infodir}/diff*
@@ -77,6 +77,15 @@ rm -rf $RPM_BUILD_ROOT
 %{_infodir}/diff.info*gz
 
 %changelog
+* Wed Jan  2 2008 Tim Waugh <twaugh@redhat.com> 2.8.1-20
+- Converted spec file to UTF-8 (bug #225696).
+- Fixed summary (bug #225696).
+- Fixed PreReq (bug #225696).
+- Removed Prefix (bug #225696).
+- Fixed build root (bug #225696).
+- Avoid %%makeinstall (bug #225696).
+- Fixed license tag (bug #225696).
+
 * Tue Nov  6 2007 Tim Waugh <twaugh@redhat.com> 2.8.1-19
 - Rebuilt.
 
@@ -165,7 +174,7 @@ rm -rf $RPM_BUILD_ROOT
 * Wed Jul 12 2000 Prospector <bugzilla@redhat.com>
 - automatic rebuild
 
-* Thu Jul 06 2000 Trond Eivind Glomsrød <teg@redhat.com>
+* Thu Jul 06 2000 Trond Eivind GlomsrÃ¸d <teg@redhat.com>
 - fix %%changelog entries (escape them)
 - update source location
 - remove manual stripping
