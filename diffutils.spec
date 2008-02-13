@@ -1,7 +1,7 @@
 Summary: A GNU collection of diff utilities
 Name: diffutils
 Version: 2.8.1
-Release: 20%{?dist}
+Release: 21%{?dist}
 Group: Applications/Text
 URL: http://www.gnu.org/software/diffutils/diffutils.html
 Source: ftp://ftp.gnu.org/gnu/diffutils/diffutils-%{version}.tar.gz
@@ -77,6 +77,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_infodir}/diff.info*gz
 
 %changelog
+* Wed Feb 13 2008 Tim Waugh <twaugh@redhat.com> 2.8.1-21
+- Rebuild for GCC 4.3.
+
 * Wed Jan  2 2008 Tim Waugh <twaugh@redhat.com> 2.8.1-20
 - Converted spec file to UTF-8 (bug #225696).
 - Fixed summary (bug #225696).
