@@ -1,7 +1,7 @@
 Summary: A GNU collection of diff utilities
 Name: diffutils
 Version: 2.8.1
-Release: 21%{?dist}
+Release: 22%{?dist}
 Group: Applications/Text
 URL: http://www.gnu.org/software/diffutils/diffutils.html
 Source: ftp://ftp.gnu.org/gnu/diffutils/diffutils-%{version}.tar.gz
@@ -12,6 +12,7 @@ Source4: sdiff.1
 Patch0: diffutils-2.8.4-i18n.patch
 Patch1: diffutils-2.8.1-badc.patch
 Patch2: diffutils-sdiff.patch
+Patch3: diffutils-sdiff-E.patch
 License: GPLv2+
 Requires(post): /sbin/install-info
 Requires(preun): /sbin/install-info
@@ -35,6 +36,7 @@ Install diffutils if you need to compare text files.
 %patch0 -p1 -b .i18n
 %patch1 -p1 -b .badc
 %patch2 -p1 -b .sdiff
+%patch3 -p1 -b .sdiff-E
 
 %build
 %configure
@@ -77,6 +79,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_infodir}/diff.info*gz
 
 %changelog
+* Fri Feb 13 2009 Tim Waugh <twaugh@redhat.com> 2.8.1-22
+- Fixed 'sdiff -E' (bug #484892).
+
 * Wed Feb 13 2008 Tim Waugh <twaugh@redhat.com> 2.8.1-21
 - Rebuild for GCC 4.3.
 
