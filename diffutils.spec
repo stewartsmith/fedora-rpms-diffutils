@@ -1,7 +1,7 @@
 Summary: A GNU collection of diff utilities
 Name: diffutils
 Version: 2.8.1
-Release: 24%{?dist}
+Release: 25%{?dist}
 Group: Applications/Text
 URL: http://www.gnu.org/software/diffutils/diffutils.html
 Source: ftp://ftp.gnu.org/gnu/diffutils/diffutils-%{version}.tar.gz
@@ -59,7 +59,9 @@ rm -f $RPM_BUILD_ROOT%{_infodir}/dir
 %find_lang %{name}
 
 %post
-/sbin/install-info %{_infodir}/diff.info.gz %{_infodir}/dir --entry="* diff: (diff).                 The GNU diff."
+if [ -f %{_infodir}/diff.info.gz ]; then
+  /sbin/install-info %{_infodir}/diff.info.gz %{_infodir}/dir --entry="* diff: (diff).                 The GNU diff."
+fi
 exit 0
 
 %preun
@@ -79,6 +81,10 @@ rm -rf $RPM_BUILD_ROOT
 %{_infodir}/diff.info*gz
 
 %changelog
+* Tue Aug 11 2009 Tim Waugh <twaugh@redhat.com> 2.8.1-25
+- Only try to install the info file if it exists so that package
+  installation does not fail with --excludedocs (bug #515919).
+
 * Fri Jul 24 2009 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 2.8.1-24
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_12_Mass_Rebuild
 
