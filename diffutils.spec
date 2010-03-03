@@ -1,7 +1,7 @@
 Summary: A GNU collection of diff utilities
 Name: diffutils
 Version: 2.8.1
-Release: 26%{?dist}
+Release: 27%{?dist}
 Group: Applications/Text
 URL: http://www.gnu.org/software/diffutils/diffutils.html
 Source: ftp://ftp.gnu.org/gnu/diffutils/diffutils-%{version}.tar.gz
@@ -29,9 +29,16 @@ Install diffutils if you need to compare text files.
 
 %prep
 %setup -q
+# Multibyte support.
 %patch0 -p1 -b .i18n
+
+# Unintentional use of '|' instead of '||'.
 %patch1 -p1 -b .badc
+
+# Fixed sdiff exit code handling (bug #152967).
 %patch2 -p1 -b .sdiff
+
+# Fixed 'sdiff -E' (bug #484892).
 %patch3 -p1 -b .sdiff-E
 
 %build
@@ -68,6 +75,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_infodir}/diff.info*gz
 
 %changelog
+* Wed Mar  3 2010 Tim Waugh <twaugh@redhat.com> - 2.8.1-27
+- Added comments for all patches.
+
 * Wed Mar  3 2010 Tim Waugh <twaugh@redhat.com> - 2.8.1-26
 - Use upstream man pages.
 - Ship COPYING file.
