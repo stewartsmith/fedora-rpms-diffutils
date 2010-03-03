@@ -1,14 +1,10 @@
 Summary: A GNU collection of diff utilities
 Name: diffutils
 Version: 2.8.1
-Release: 25%{?dist}
+Release: 26%{?dist}
 Group: Applications/Text
 URL: http://www.gnu.org/software/diffutils/diffutils.html
 Source: ftp://ftp.gnu.org/gnu/diffutils/diffutils-%{version}.tar.gz
-Source1: cmp.1
-Source2: diff.1
-Source3: diff3.1
-Source4: sdiff.1
 Patch0: diffutils-2.8.4-i18n.patch
 Patch1: diffutils-2.8.1-badc.patch
 Patch2: diffutils-sdiff.patch
@@ -46,15 +42,6 @@ make PR_PROGRAM=%{_bindir}/pr
 rm -rf $RPM_BUILD_ROOT
 make DESTDIR=$RPM_BUILD_ROOT install
 
-( cd $RPM_BUILD_ROOT
-  gzip -9nf .%{_infodir}/diff*
-  mkdir -p .%{_mandir}/man1
-  for manpage in %{SOURCE1} %{SOURCE2} %{SOURCE3} %{SOURCE4}
-  do
-    install -m 0644 ${manpage} .%{_mandir}/man1
-  done
-)
-
 rm -f $RPM_BUILD_ROOT%{_infodir}/dir
 %find_lang %{name}
 
@@ -75,12 +62,16 @@ rm -rf $RPM_BUILD_ROOT
 
 %files -f %{name}.lang
 %defattr(-,root,root)
-%doc NEWS README
+%doc COPYING NEWS README
 %{_bindir}/*
 %{_mandir}/*/*
 %{_infodir}/diff.info*gz
 
 %changelog
+* Wed Mar  3 2010 Tim Waugh <twaugh@redhat.com> - 2.8.1-26
+- Use upstream man pages.
+- Ship COPYING file.
+
 * Tue Aug 11 2009 Tim Waugh <twaugh@redhat.com> 2.8.1-25
 - Only try to install the info file if it exists so that package
   installation does not fail with --excludedocs (bug #515919).
