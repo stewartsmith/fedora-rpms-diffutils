@@ -1,7 +1,7 @@
 Summary: A GNU collection of diff utilities
 Name: diffutils
 Version: 2.8.1
-Release: 27%{?dist}
+Release: 28%{?dist}
 Group: Applications/Text
 URL: http://www.gnu.org/software/diffutils/diffutils.html
 Source: ftp://ftp.gnu.org/gnu/diffutils/diffutils-%{version}.tar.gz
@@ -13,6 +13,7 @@ License: GPLv2+
 Requires(post): /sbin/install-info
 Requires(preun): /sbin/install-info
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
+BuildRequires: help2man
 
 %description
 Diffutils includes four utilities: diff, cmp, diff3 and sdiff. Diff
@@ -75,6 +76,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_infodir}/diff.info*gz
 
 %changelog
+* Wed Apr 21 2010 Tim Waugh <twaugh@redhat.com> - 2.8.1-28
+- Build requires help2man (bug #577325).  Fixes empty diff man page.
+
 * Wed Mar  3 2010 Tim Waugh <twaugh@redhat.com> - 2.8.1-27
 - Added comments for all patches.
 
