@@ -1,7 +1,7 @@
 Summary: A GNU collection of diff utilities
 Name: diffutils
 Version: 2.8.1
-Release: 28%{?dist}
+Release: 29%{?dist}
 Group: Applications/Text
 URL: http://www.gnu.org/software/diffutils/diffutils.html
 Source: ftp://ftp.gnu.org/gnu/diffutils/diffutils-%{version}.tar.gz
@@ -9,6 +9,7 @@ Patch0: diffutils-2.8.4-i18n.patch
 Patch1: diffutils-2.8.1-badc.patch
 Patch2: diffutils-sdiff.patch
 Patch3: diffutils-sdiff-E.patch
+Patch4: diffutils-cmp-s-empty.patch
 License: GPLv2+
 Requires(post): /sbin/install-info
 Requires(preun): /sbin/install-info
@@ -41,6 +42,9 @@ Install diffutils if you need to compare text files.
 
 # Fixed 'sdiff -E' (bug #484892).
 %patch3 -p1 -b .sdiff-E
+
+# For 'cmp -s', compare file sizes only if both non-zero (bug #563618).
+%patch4 -p1 -b .cmp-s-empty
 
 %build
 %configure
@@ -76,6 +80,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_infodir}/diff.info*gz
 
 %changelog
+* Fri Jun 25 2010 Tim Waugh <twaugh@redhat.com> 2.8.1-29
+- For 'cmp -s', compare file sizes only if both non-zero (bug #563618).
+
 * Wed Apr 21 2010 Tim Waugh <twaugh@redhat.com> - 2.8.1-28
 - Build requires help2man (bug #577325).  Fixes empty diff man page.
 
