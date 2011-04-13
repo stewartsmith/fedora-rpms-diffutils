@@ -1,14 +1,10 @@
 Summary: A GNU collection of diff utilities
 Name: diffutils
-Version: 2.8.1
-Release: 30%{?dist}
+Version: 3.0
+Release: 1%{?dist}
 Group: Applications/Text
 URL: http://www.gnu.org/software/diffutils/diffutils.html
-Source: ftp://ftp.gnu.org/gnu/diffutils/diffutils-%{version}.tar.gz
-Patch0: diffutils-2.8.4-i18n.patch
-Patch1: diffutils-2.8.1-badc.patch
-Patch2: diffutils-sdiff.patch
-Patch3: diffutils-sdiff-E.patch
+Source: ftp://ftp.gnu.org/gnu/diffutils/diffutils-%{version}.tar.xz
 Patch4: diffutils-cmp-s-empty.patch
 License: GPLv2+
 Requires(post): /sbin/install-info
@@ -31,18 +27,6 @@ Install diffutils if you need to compare text files.
 
 %prep
 %setup -q
-# Multibyte support.
-%patch0 -p1 -b .i18n
-
-# Unintentional use of '|' instead of '||'.
-%patch1 -p1 -b .badc
-
-# Fixed sdiff exit code handling (bug #152967).
-%patch2 -p1 -b .sdiff
-
-# Fixed 'sdiff -E' (bug #484892).
-%patch3 -p1 -b .sdiff-E
-
 # For 'cmp -s', compare file sizes only if both non-zero (bug #563618).
 %patch4 -p1 -b .cmp-s-empty
 
@@ -56,6 +40,9 @@ make DESTDIR=$RPM_BUILD_ROOT install
 
 rm -f $RPM_BUILD_ROOT%{_infodir}/dir
 %find_lang %{name}
+
+%check
+make check
 
 %post
 if [ -f %{_infodir}/diff.info.gz ]; then
@@ -80,6 +67,10 @@ rm -rf $RPM_BUILD_ROOT
 %{_infodir}/diff.info*gz
 
 %changelog
+* Wed Apr 13 2011 Tim Waugh <twaugh@redhat.com> 3.0-1
+- 3.0 (bug #566482).
+- The i18n patch is dropped for the time being.
+
 * Tue Feb 08 2011 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 2.8.1-30
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_15_Mass_Rebuild
 
