@@ -1,6 +1,6 @@
 Summary: A GNU collection of diff utilities
 Name: diffutils
-Version: 3.0
+Version: 3.1
 Release: 1%{?dist}
 Group: Applications/Text
 URL: http://www.gnu.org/software/diffutils/diffutils.html
@@ -64,9 +64,12 @@ rm -rf $RPM_BUILD_ROOT
 %doc COPYING NEWS README
 %{_bindir}/*
 %{_mandir}/*/*
-%{_infodir}/diff.info*gz
+%{_infodir}/diffutils.info*gz
 
 %changelog
+* Thu Aug 11 2011 Tim Waugh <twaugh@redhat.com> 3.1-1
+- 3.1.
+
 * Wed Apr 13 2011 Tim Waugh <twaugh@redhat.com> 3.0-1
 - 3.0 (bug #566482).
 - The i18n patch is dropped for the time being.
