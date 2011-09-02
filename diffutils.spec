@@ -1,6 +1,6 @@
 Summary: A GNU collection of diff utilities
 Name: diffutils
-Version: 3.1
+Version: 3.2
 Release: 1%{?dist}
 Group: Applications/Text
 URL: http://www.gnu.org/software/diffutils/diffutils.html
@@ -67,6 +67,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_infodir}/diffutils.info*gz
 
 %changelog
+* Fri Sep  2 2011 Tim Waugh <twaugh@redhat.com> 3.2-1
+- 3.2.
+
 * Thu Aug 11 2011 Tim Waugh <twaugh@redhat.com> 3.1-1
 - 3.1.
 
