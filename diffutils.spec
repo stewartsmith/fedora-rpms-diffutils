@@ -1,12 +1,13 @@
 Summary: A GNU collection of diff utilities
 Name: diffutils
 Version: 3.2
-Release: 2%{?dist}
+Release: 3%{?dist}
 Group: Applications/Text
 URL: http://www.gnu.org/software/diffutils/diffutils.html
 Source: ftp://ftp.gnu.org/gnu/diffutils/diffutils-%{version}.tar.xz
 Patch1: diffutils-cmp-s-empty.patch
 Patch2: diffutils-ppc-float.patch
+Patch3: diffutils-info-ref.patch
 License: GPLv2+
 Requires(post): /sbin/install-info
 Requires(preun): /sbin/install-info
@@ -33,6 +34,9 @@ Install diffutils if you need to compare text files.
 
 # Applied upstream gnulib fix for float test on ppc (bug #733536).
 %patch2 -p1 -b .ppc-float
+
+# Fixed up reference to info page in man pages (bug #747969).
+%patch3 -p1 -b .info-ref
 
 %build
 %configure
@@ -71,6 +75,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_infodir}/diffutils.info*gz
 
 %changelog
+* Fri Nov 25 2011 Tim Waugh <twaugh@redhat.com> 3.2-3
+- Fixed up reference to info page in man pages (bug #747969).
+
 * Fri Nov 25 2011 Tim Waugh <twaugh@redhat.com> 3.2-2
 - Applied upstream gnulib fix for float test on ppc, as well as
   correction for LDBL_MANT_DIG definition (bug #733536).

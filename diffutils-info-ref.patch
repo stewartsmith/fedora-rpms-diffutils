@@ -1,0 +1,22 @@
+diff -up diffutils-3.2/man/diff.1.info-ref diffutils-3.2/man/diff.1
+--- diffutils-3.2/man/diff.1.info-ref	2011-11-25 14:51:13.101485425 +0000
++++ diffutils-3.2/man/diff.1	2011-11-25 14:51:26.776227663 +0000
+@@ -247,6 +247,6 @@ and
+ .B diff
+ programs are properly installed at your site, the command
+ .IP
+-.B info diff
++.B info diffutils
+ .PP
+ should give you access to the complete manual.
+diff -up diffutils-3.2/man/diff3.1.info-ref diffutils-3.2/man/diff3.1
+--- diffutils-3.2/man/diff3.1.info-ref	2011-11-25 14:51:31.141145384 +0000
++++ diffutils-3.2/man/diff3.1	2011-11-25 14:51:40.025977907 +0000
+@@ -95,6 +95,6 @@ and
+ .B diff3
+ programs are properly installed at your site, the command
+ .IP
+-.B info diff3
++.B info diffutils
+ .PP
+ should give you access to the complete manual.
