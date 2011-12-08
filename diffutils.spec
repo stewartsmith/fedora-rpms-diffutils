@@ -1,15 +1,15 @@
 Summary: A GNU collection of diff utilities
 Name: diffutils
 Version: 3.2
-Release: 4%{?dist}
+Release: 5%{?dist}
 Group: Applications/Text
 URL: http://www.gnu.org/software/diffutils/diffutils.html
 Source: ftp://ftp.gnu.org/gnu/diffutils/diffutils-%{version}.tar.xz
 Patch1: diffutils-cmp-s-empty.patch
 Patch2: diffutils-ppc-float.patch
 License: GPLv2+
-Requires(post): /sbin/install-info
-Requires(preun): /sbin/install-info
+Requires(post): info
+Requires(preun): info
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildRequires: help2man
 
@@ -49,18 +49,12 @@ rm -f $RPM_BUILD_ROOT%{_infodir}/dir
 make check
 
 %post
-if [ -f %{_infodir}/diffutils.info.gz ]; then
-  /sbin/install-info %{_infodir}/diffutils.info.gz %{_infodir}/dir --entry="* diff: (diff).                 The GNU diff."
-fi
-exit 0
+/sbin/install-info %{_infodir}/%{name}.info %{_infodir}/dir || :
 
 %preun
 if [ $1 = 0 ]; then
-    /sbin/install-info --delete %{_infodir}/diffutils.info.gz %{_infodir}/dir --entry="* diff: (diff).                 The GNU diff."
-    # Also remove old name:
-    /sbin/install-info --delete %{_infodir}/diff.info.gz %{_infodir}/dir --entry="* diff: (diff).                 The GNU diff."
+  /sbin/install-info --delete %{_infodir}/%{name}.info %{_infodir}/dir || :
 fi
-exit 0
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -73,6 +67,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_infodir}/diffutils.info*gz
 
 %changelog
+* Thu Dec  8 2011 Tim Waugh <twaugh@redhat.com> 3.2-5
+- Fix bug #747969 again.
+
 * Tue Nov 29 2011 Tim Waugh <twaugh@redhat.com> 3.2-4
 - Real fix for bug #747969: the diffutils info file changed name in
   3.1.  Updated the scriptlets to install/remove the correct filename
