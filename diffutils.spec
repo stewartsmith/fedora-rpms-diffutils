@@ -1,7 +1,7 @@
 Summary: A GNU collection of diff utilities
 Name: diffutils
 Version: 3.2
-Release: 6%{?dist}
+Release: 7%{?dist}
 Group: Applications/Text
 URL: http://www.gnu.org/software/diffutils/diffutils.html
 Source: ftp://ftp.gnu.org/gnu/diffutils/diffutils-%{version}.tar.xz
@@ -10,6 +10,7 @@ Patch2: diffutils-ppc-float.patch
 License: GPLv2+
 Requires(post): info
 Requires(preun): info
+Provides: bundled(gnulib)
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildRequires: help2man
 
@@ -67,6 +68,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_infodir}/diffutils.info*gz
 
 %changelog
+* Mon May 21  2012 Tim Waugh <twaugh@redhat.com> 3.2-7
+- Provides bundled(gnulib) (bug #821751).
+
 * Fri Jan 13 2012 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 3.2-6
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_17_Mass_Rebuild
 
