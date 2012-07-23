@@ -1,12 +1,13 @@
 Summary: A GNU collection of diff utilities
 Name: diffutils
 Version: 3.2
-Release: 8%{?dist}
+Release: 9%{?dist}
 Group: Applications/Text
 URL: http://www.gnu.org/software/diffutils/diffutils.html
 Source: ftp://ftp.gnu.org/gnu/diffutils/diffutils-%{version}.tar.xz
 Patch1: diffutils-cmp-s-empty.patch
 Patch2: diffutils-ppc-float.patch
+Patch3: diffutils-stdio-gets.patch
 License: GPLv2+
 Requires(post): info
 Requires(preun): info
@@ -34,6 +35,9 @@ Install diffutils if you need to compare text files.
 
 # Applied upstream gnulib fix for float test on ppc (bug #733536).
 %patch2 -p1 -b .ppc-float
+
+# Fixed build failure.
+%patch3 -p1 -b .stdio-gets
 
 %build
 %configure
@@ -68,6 +72,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_infodir}/diffutils.info*gz
 
 %changelog
+* Mon Jul 23 2012 Tim Waugh <twaugh@redhat.com> 3.2-9
+- Fixed build failure.
+
 * Wed Jul 18 2012 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 3.2-8
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_18_Mass_Rebuild
 
