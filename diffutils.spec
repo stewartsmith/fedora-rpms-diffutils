@@ -1,14 +1,14 @@
 Summary: A GNU collection of diff utilities
 Name: diffutils
 Version: 3.2
-Release: 9%{?dist}
+Release: 10%{?dist}
 Group: Applications/Text
 URL: http://www.gnu.org/software/diffutils/diffutils.html
 Source: ftp://ftp.gnu.org/gnu/diffutils/diffutils-%{version}.tar.xz
 Patch1: diffutils-cmp-s-empty.patch
 Patch2: diffutils-ppc-float.patch
 Patch3: diffutils-stdio-gets.patch
-License: GPLv2+
+License: GPLv3+
 Requires(post): info
 Requires(preun): info
 Provides: bundled(gnulib)
@@ -72,6 +72,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_infodir}/diffutils.info*gz
 
 %changelog
+* Wed Sep 19 2012 Tim Waugh <twaugh@redhat.com> 3.2-10
+- Fixed license as current source says GPLv3+.
+
 * Mon Jul 23 2012 Tim Waugh <twaugh@redhat.com> 3.2-9
 - Fixed build failure.
 
