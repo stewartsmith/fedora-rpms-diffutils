@@ -1,13 +1,14 @@
 Summary: A GNU collection of diff utilities
 Name: diffutils
 Version: 3.2
-Release: 10%{?dist}
+Release: 11%{?dist}
 Group: Applications/Text
 URL: http://www.gnu.org/software/diffutils/diffutils.html
 Source: ftp://ftp.gnu.org/gnu/diffutils/diffutils-%{version}.tar.xz
 Patch1: diffutils-cmp-s-empty.patch
 Patch2: diffutils-ppc-float.patch
 Patch3: diffutils-stdio-gets.patch
+Patch4: diffutils-3.2-i18n.patch
 License: GPLv3+
 Requires(post): info
 Requires(preun): info
@@ -38,6 +39,8 @@ Install diffutils if you need to compare text files.
 
 # Fixed build failure.
 %patch3 -p1 -b .stdio-gets
+
+%patch4 -p1 -b .i18n
 
 %build
 %configure
@@ -72,6 +75,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_infodir}/diffutils.info*gz
 
 %changelog
+* Fri Oct 26 2012 Tim Waugh <twaugh@redhat.com> 3.2-11
+- Ported i18n patch and reinstated it (bug #870460).
+
 * Wed Sep 19 2012 Tim Waugh <twaugh@redhat.com> 3.2-10
 - Fixed license as current source says GPLv3+.
 
