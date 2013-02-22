@@ -1,7 +1,7 @@
 Summary: A GNU collection of diff utilities
 Name: diffutils
 Version: 3.2
-Release: 12%{?dist}
+Release: 13%{?dist}
 Group: Applications/Text
 URL: http://www.gnu.org/software/diffutils/diffutils.html
 Source: ftp://ftp.gnu.org/gnu/diffutils/diffutils-%{version}.tar.xz
@@ -75,6 +75,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_infodir}/diffutils.info*gz
 
 %changelog
+* Fri Feb 22 2013 Tim Waugh <twaugh@redhat.com> 3.2-13
+- Fixed i18n handling of 'diff -E' (bug #914666).
+
 * Wed Feb 13 2013 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 3.2-12
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_19_Mass_Rebuild
 
