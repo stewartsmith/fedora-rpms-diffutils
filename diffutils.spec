@@ -1,14 +1,13 @@
 Summary: A GNU collection of diff utilities
 Name: diffutils
-Version: 3.2
-Release: 12%{?dist}
+Version: 3.3
+Release: 1%{?dist}
 Group: Applications/Text
 URL: http://www.gnu.org/software/diffutils/diffutils.html
 Source: ftp://ftp.gnu.org/gnu/diffutils/diffutils-%{version}.tar.xz
 Patch1: diffutils-cmp-s-empty.patch
-Patch2: diffutils-ppc-float.patch
-Patch3: diffutils-stdio-gets.patch
-Patch4: diffutils-3.2-i18n.patch
+Patch2: diffutils-mkdir_p.patch
+Patch4: diffutils-i18n.patch
 License: GPLv3+
 Requires(post): info
 Requires(preun): info
@@ -34,11 +33,8 @@ Install diffutils if you need to compare text files.
 # For 'cmp -s', compare file sizes only if both non-zero (bug #563618).
 %patch1 -p1 -b .cmp-s-empty
 
-# Applied upstream gnulib fix for float test on ppc (bug #733536).
-%patch2 -p1 -b .ppc-float
-
-# Fixed build failure.
-%patch3 -p1 -b .stdio-gets
+# Work around @mkdir_p@ build issue.
+%patch2 -p1 -b .mkdir_p
 
 %patch4 -p1 -b .i18n
 
@@ -75,6 +71,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_infodir}/diffutils.info*gz
 
 %changelog
+* Tue Mar 26 2013 Tim Waugh <twaugh@redhat.com> 3.3-1
+- 3.3 (bug #927560).
+
 * Fri Feb 22 2013 Tim Waugh <twaugh@redhat.com> 3.2-12
 - Fixed i18n handling of 'diff -E' (bug #914666).
 
