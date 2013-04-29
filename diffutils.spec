@@ -1,7 +1,7 @@
 Summary: A GNU collection of diff utilities
 Name: diffutils
 Version: 3.3
-Release: 1%{?dist}
+Release: 2%{?dist}
 Group: Applications/Text
 URL: http://www.gnu.org/software/diffutils/diffutils.html
 Source: ftp://ftp.gnu.org/gnu/diffutils/diffutils-%{version}.tar.xz
@@ -14,6 +14,7 @@ Requires(preun): info
 Provides: bundled(gnulib)
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildRequires: help2man
+BuildRequires: autoconf, automake
 
 %description
 Diffutils includes four utilities: diff, cmp, diff3 and sdiff. Diff
@@ -37,6 +38,9 @@ Install diffutils if you need to compare text files.
 %patch2 -p1 -b .mkdir_p
 
 %patch4 -p1 -b .i18n
+
+# Run autoreconf for aarch64 support (bug #925256).
+autoreconf
 
 %build
 %configure
@@ -71,6 +75,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_infodir}/diffutils.info*gz
 
 %changelog
+* Mon Apr 29 2013 Tim Waugh <twaugh@redhat.com> 3.3-2
+- Run autoreconf for aarch64 support (bug #925256).
+
 * Tue Mar 26 2013 Tim Waugh <twaugh@redhat.com> 3.3-1
 - 3.3 (bug #927560).
 
