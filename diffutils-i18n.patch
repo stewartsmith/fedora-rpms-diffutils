@@ -1,6 +1,6 @@
 diff -up diffutils-3.3/src/diff.c.i18n diffutils-3.3/src/diff.c
 --- diffutils-3.3/src/diff.c.i18n	2013-02-02 04:39:05.000000000 +0000
-+++ diffutils-3.3/src/diff.c	2013-03-26 09:40:26.213878482 +0000
++++ diffutils-3.3/src/diff.c	2013-10-23 11:25:18.729708853 +0100
 @@ -74,6 +74,8 @@ static void try_help (char const *, char
  static void check_stdout (void);
  static void usage (void);
@@ -26,7 +26,7 @@ diff -up diffutils-3.3/src/diff.c.i18n diffutils-3.3/src/diff.c
    while ((c = getopt_long (argc, argv, shortopts, longopts, NULL)) != -1)
 diff -up diffutils-3.3/src/diff.h.i18n diffutils-3.3/src/diff.h
 --- diffutils-3.3/src/diff.h.i18n	2013-02-02 04:39:05.000000000 +0000
-+++ diffutils-3.3/src/diff.h	2013-03-26 09:42:32.941357743 +0000
++++ diffutils-3.3/src/diff.h	2013-10-23 11:25:18.729708853 +0100
 @@ -23,6 +23,17 @@
  #include <stdio.h>
  #include <unlocked-io.h>
@@ -60,7 +60,7 @@ diff -up diffutils-3.3/src/diff.h.i18n diffutils-3.3/src/diff.h
  extern struct change *find_reverse_change (struct change *);
 diff -up diffutils-3.3/src/io.c.i18n diffutils-3.3/src/io.c
 --- diffutils-3.3/src/io.c.i18n	2013-02-02 04:39:05.000000000 +0000
-+++ diffutils-3.3/src/io.c	2013-03-26 09:40:26.215878488 +0000
++++ diffutils-3.3/src/io.c	2013-10-23 12:03:09.155348827 +0100
 @@ -23,6 +23,7 @@
  #include <cmpbuf.h>
  #include <file-type.h>
@@ -98,7 +98,7 @@ diff -up diffutils-3.3/src/io.c.i18n diffutils-3.3/src/io.c
  
  static void
  find_and_hash_each_line (struct file_data *current)
-@@ -234,12 +257,302 @@ find_and_hash_each_line (struct file_dat
+@@ -234,12 +257,300 @@ find_and_hash_each_line (struct file_dat
    bool same_length_diff_contents_compare_anyway =
      diff_length_compare_anyway | ig_case;
  
@@ -269,7 +269,7 @@ diff -up diffutils-3.3/src/io.c.i18n diffutils-3.3/src/io.c
 +			  {
 +			    if (*p1 == '\n')
 +			      {
-+				p = p1;
++				p = p1 + 1;
 +				goto hashing_done;
 +			      }
 +
@@ -281,10 +281,10 @@ diff -up diffutils-3.3/src/io.c.i18n diffutils-3.3/src/io.c
 +		      }
 +
 +		    size_t repetitions = 1;
++		    bool no_convert = 0;
 +
 +		    if (ig_white_space & IGNORE_TAB_EXPANSION)
 +		      {
-+			bool flag = 0;
 +			if (convfail)
 +			  column++;
 +			else
@@ -297,7 +297,7 @@ diff -up diffutils-3.3/src/io.c.i18n diffutils-3.3/src/io.c
 +			    case L'\t':
 +			      mbc[0] = ' ';
 +			      mblength = 1;
-+			      flag = 1;
++			      no_convert = 1;
 +			      p++;
 +			      assert(mblength == 1);
 +			      repetitions = tabsize - column % tabsize;
@@ -314,30 +314,28 @@ diff -up diffutils-3.3/src/io.c.i18n diffutils-3.3/src/io.c
 +			      column += wcwidth (wc);
 +			      break;
 +			    }
++		      }
 +
-+			if (ig_case)
++		    if (ig_case)
++		      {
++			lo_wc = towlower (wc);
++			if (lo_wc != wc)
 +			  {
-+			    lo_wc = towlower (wc);
-+			    if (lo_wc != wc)
-+			      {
-+				flag = 1;
-+				p += mblength;
-+				memset (&state_wc, '\0', sizeof(mbstate_t));
-+				mblength = wcrtomb (mbc, lo_wc, &state_wc);
++			    no_convert = 1;
++			    p += mblength;
++			    memset (&state_wc, '\0', sizeof(mbstate_t));
++			    mblength = wcrtomb (mbc, lo_wc, &state_wc);
 +
-+				assert (mblength != (size_t)-1 &&
-+					mblength != (size_t)-2);
++			    assert (mblength != (size_t)-1 &&
++				    mblength != (size_t)-2);
 +
-+				mblength = (mblength < 1) ? 1 : mblength;
-+			      }
-+			  }
-+
-+			if (!flag)
-+			  {
-+			    for (i = 0; i < mblength; i++)
-+			      mbc[i] = *p++;
++			    mblength = (mblength < 1) ? 1 : mblength;
 +			  }
 +		      }
++
++		    if (!no_convert)
++		      for (i = 0; i < mblength; i++)
++			mbc[i] = *p++;
 +
 +		    do
 +		      {
@@ -401,7 +399,7 @@ diff -up diffutils-3.3/src/io.c.i18n diffutils-3.3/src/io.c
        /* Hash this line until we find a newline.  */
        switch (ig_white_space)
  	{
-@@ -390,7 +703,7 @@ find_and_hash_each_line (struct file_dat
+@@ -390,7 +701,7 @@ find_and_hash_each_line (struct file_dat
  	    else if (!diff_length_compare_anyway)
  	      continue;
  
@@ -412,7 +410,7 @@ diff -up diffutils-3.3/src/io.c.i18n diffutils-3.3/src/io.c
  
 diff -up diffutils-3.3/src/util.c.i18n diffutils-3.3/src/util.c
 --- diffutils-3.3/src/util.c.i18n	2013-02-02 04:39:05.000000000 +0000
-+++ diffutils-3.3/src/util.c	2013-03-26 09:40:26.215878488 +0000
++++ diffutils-3.3/src/util.c	2013-10-23 11:25:18.730708857 +0100
 @@ -408,7 +408,8 @@ finish_output (void)
     Return nonzero if the lines differ.  */
  
