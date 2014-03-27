@@ -1,12 +1,13 @@
 Summary: A GNU collection of diff utilities
 Name: diffutils
 Version: 3.3
-Release: 5%{?dist}
+Release: 6%{?dist}
 Group: Applications/Text
 URL: http://www.gnu.org/software/diffutils/diffutils.html
 Source: ftp://ftp.gnu.org/gnu/diffutils/diffutils-%{version}.tar.xz
 Patch1: diffutils-cmp-s-empty.patch
 Patch2: diffutils-mkdir_p.patch
+Patch3: diffutils-FILE....patch
 Patch4: diffutils-i18n.patch
 Patch5: diffutils-format-security.patch
 License: GPLv3+
@@ -37,6 +38,9 @@ Install diffutils if you need to compare text files.
 
 # Work around @mkdir_p@ build issue.
 %patch2 -p1 -b .mkdir_p
+
+# Fix --help output and man page (bug #1079076).
+%patch3 -p1 -b .FILE...
 
 %patch4 -p1 -b .i18n
 
@@ -80,6 +84,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_infodir}/diffutils.info*gz
 
 %changelog
+* Thu Mar 27 2014 Tim Waugh <twaugh@redhat.com> 3.3-6
+- Fix --help output and man page (bug #1079076).
+
 * Wed Dec  4 2013 Tim Waugh <twaugh@redhat.com> 3.3-5
 - Applied upstream gnulib patch to avoid -Wformat-security warning
   (bug #1037038).
