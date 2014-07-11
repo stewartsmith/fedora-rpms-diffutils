@@ -1,7 +1,7 @@
 Summary: A GNU collection of diff utilities
 Name: diffutils
 Version: 3.3
-Release: 7%{?dist}
+Release: 8%{?dist}
 Group: Applications/Text
 URL: http://www.gnu.org/software/diffutils/diffutils.html
 Source: ftp://ftp.gnu.org/gnu/diffutils/diffutils-%{version}.tar.xz
@@ -78,12 +78,17 @@ rm -rf $RPM_BUILD_ROOT
 
 %files -f %{name}.lang
 %defattr(-,root,root)
-%doc COPYING NEWS README
+%doc NEWS README
+%{!?_licensedir:%global license %%doc}
+%license COPYING
 %{_bindir}/*
 %{_mandir}/*/*
 %{_infodir}/diffutils.info*gz
 
 %changelog
+* Fri Jul 11 2014 Tom Callaway <spot@fedoraproject.org> - 3.3-8
+- fix license handling
+
 * Sat Jun 07 2014 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 3.3-7
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_21_Mass_Rebuild
 
