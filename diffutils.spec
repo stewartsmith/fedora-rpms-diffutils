@@ -1,7 +1,7 @@
 Summary: A GNU collection of diff utilities
 Name: diffutils
 Version: 3.3
-Release: 11%{?dist}
+Release: 12%{?dist}
 Group: Applications/Text
 URL: http://www.gnu.org/software/diffutils/diffutils.html
 Source: ftp://ftp.gnu.org/gnu/diffutils/diffutils-%{version}.tar.xz
@@ -63,6 +63,8 @@ rm -f $RPM_BUILD_ROOT%{_infodir}/dir
 %find_lang %{name}
 
 %check
+# Disable update-copyright gnulib test (bug #1239428).
+>gnulib-tests/test-update-copyright.sh
 make check
 
 %post
@@ -86,6 +88,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_infodir}/diffutils.info*gz
 
 %changelog
+* Mon Jul  6 2015 Tim Waugh <twaugh@redhat.com> - 3.3-12
+- Disable update-copyright gnulib test (bug #1239428).
+
 * Wed Jun 17 2015 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 3.3-11
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_23_Mass_Rebuild
 
