@@ -1,22 +1,19 @@
 Summary: A GNU collection of diff utilities
 Name: diffutils
-Version: 3.3
-Release: 13%{?dist}
+Version: 3.5
+Release: 1%{?dist}
 Group: Applications/Text
 URL: http://www.gnu.org/software/diffutils/diffutils.html
 Source: ftp://ftp.gnu.org/gnu/diffutils/diffutils-%{version}.tar.xz
 Patch1: diffutils-cmp-s-empty.patch
-Patch2: diffutils-mkdir_p.patch
-Patch3: diffutils-FILE....patch
-Patch4: diffutils-i18n.patch
-Patch5: diffutils-format-security.patch
+Patch2: diffutils-i18n.patch
 License: GPLv3+
 Requires(post): info
 Requires(preun): info
 Provides: bundled(gnulib)
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildRequires: help2man
-BuildRequires: autoconf, automake
+BuildRequires: autoconf, automake, texinfo
 
 %description
 Diffutils includes four utilities: diff, cmp, diff3 and sdiff. Diff
@@ -36,17 +33,7 @@ Install diffutils if you need to compare text files.
 # For 'cmp -s', compare file sizes only if both non-zero (bug #563618).
 %patch1 -p1 -b .cmp-s-empty
 
-# Work around @mkdir_p@ build issue.
-%patch2 -p1 -b .mkdir_p
-
-# Fix --help output and man page (bug #1079076).
-%patch3 -p1 -b .FILE...
-
-%patch4 -p1 -b .i18n
-
-# Applied upstream gnulib patch to avoid -Wformat-security warning
-# (bug #1037038).
-%patch5 -p1 -b .format-security
+%patch2 -p1 -b .i18n
 
 # Run autoreconf for aarch64 support (bug #925256).
 autoreconf
@@ -88,6 +75,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_infodir}/diffutils.info*gz
 
 %changelog
+* Wed Sep 21 2016 Tim Waugh <twaugh@redhat.com> - 3.5-1
+- 3.5 (bug #1365325).
+
 * Wed Feb 03 2016 Fedora Release Engineering <releng@fedoraproject.org> - 3.3-13
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_24_Mass_Rebuild
 
