@@ -1,12 +1,13 @@
 Summary: A GNU collection of diff utilities
 Name: diffutils
 Version: 3.5
-Release: 2%{?dist}
+Release: 3%{?dist}
 Group: Applications/Text
 URL: http://www.gnu.org/software/diffutils/diffutils.html
 Source: ftp://ftp.gnu.org/gnu/diffutils/diffutils-%{version}.tar.xz
 Patch1: diffutils-cmp-s-empty.patch
 Patch2: diffutils-i18n.patch
+Patch3: diffutils-3.5-gcc7.patch
 License: GPLv3+
 Requires(post): info
 Requires(preun): info
@@ -34,6 +35,8 @@ Install diffutils if you need to compare text files.
 %patch1 -p1 -b .cmp-s-empty
 
 %patch2 -p1 -b .i18n
+
+%patch3 -p1 -b .gcc7
 
 # Run autoreconf for aarch64 support (bug #925256).
 autoreconf
@@ -75,6 +78,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_infodir}/diffutils.info*gz
 
 %changelog
+* Tue Feb 21 2017 Than Ngo <than@redhat.com> - 3.5-3
+- backport to fix  FTBFs with GCC 7
+
 * Fri Feb 10 2017 Fedora Release Engineering <releng@fedoraproject.org> - 3.5-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_26_Mass_Rebuild
 
