@@ -1,13 +1,12 @@
 Summary: A GNU collection of diff utilities
 Name: diffutils
-Version: 3.5
-Release: 3%{?dist}
+Version: 3.6
+Release: 1%{?dist}
 Group: Applications/Text
 URL: http://www.gnu.org/software/diffutils/diffutils.html
 Source: ftp://ftp.gnu.org/gnu/diffutils/diffutils-%{version}.tar.xz
 Patch1: diffutils-cmp-s-empty.patch
 Patch2: diffutils-i18n.patch
-Patch3: diffutils-3.5-gcc7.patch
 License: GPLv3+
 Requires(post): info
 Requires(preun): info
@@ -35,8 +34,6 @@ Install diffutils if you need to compare text files.
 %patch1 -p1 -b .cmp-s-empty
 
 %patch2 -p1 -b .i18n
-
-%patch3 -p1 -b .gcc7
 
 # Run autoreconf for aarch64 support (bug #925256).
 autoreconf
@@ -78,6 +75,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_infodir}/diffutils.info*gz
 
 %changelog
+* Mon May 22 2017 Tim Waugh <twaugh@redhat.com> - 3.6-1
+- 3.6 (bug #1453019).
+
 * Tue Feb 21 2017 Than Ngo <than@redhat.com> - 3.5-3
 - backport to fix  FTBFs with GCC 7
 
