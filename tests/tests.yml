@@ -1,0 +1,18 @@
+---
+# Tests that run in classic context
+- hosts: localhost
+  roles:
+  - role: standard-test-beakerlib
+    tags:
+    - classic
+    - container
+    - atomic
+    tests:
+    - cmp-s-returns-1-even-if-files-are-identical
+    - diff-hang-long-files
+    - diff-w-b-doesn-t-treat-U3000-IDEOGRAPHIC-SPACE-as-space
+    - diff-Z-hangs
+    - sdiff-does-not-recognize-E-option
+    - whitespace
+    required_packages:
+    - findutils         # beakerlib needs find command
