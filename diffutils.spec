@@ -11,7 +11,6 @@ License: GPLv3+
 Requires(post): info
 Requires(preun): info
 Provides: bundled(gnulib)
-BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildRequires: help2man
 BuildRequires: autoconf, automake, texinfo
 
