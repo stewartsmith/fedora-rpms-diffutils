@@ -11,6 +11,7 @@ License: GPLv3+
 Requires(post): info
 Requires(preun): info
 Provides: bundled(gnulib)
+BuildRequires:  gcc
 BuildRequires: help2man
 BuildRequires: autoconf, automake, texinfo
 
