@@ -63,7 +63,6 @@ if [ $1 = 0 ]; then
 fi
 
 %files -f %{name}.lang
-%defattr(-,root,root)
 %doc NEWS README
 %{!?_licensedir:%global license %%doc}
 %license COPYING
