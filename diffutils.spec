@@ -8,8 +8,6 @@ Source: ftp://ftp.gnu.org/gnu/diffutils/diffutils-%{version}.tar.xz
 Patch1: diffutils-cmp-s-empty.patch
 Patch2: diffutils-i18n.patch
 License: GPLv3+
-Requires(post): info
-Requires(preun): info
 Provides: bundled(gnulib)
 BuildRequires:  gcc
 BuildRequires: help2man
@@ -43,8 +41,7 @@ autoreconf
 make PR_PROGRAM=%{_bindir}/pr
 
 %install
-rm -rf $RPM_BUILD_ROOT
-make DESTDIR=$RPM_BUILD_ROOT install
+%make_install
 
 rm -f $RPM_BUILD_ROOT%{_infodir}/dir
 %find_lang %{name}
@@ -54,21 +51,12 @@ rm -f $RPM_BUILD_ROOT%{_infodir}/dir
 >gnulib-tests/test-update-copyright.sh
 make check
 
-%post
-/sbin/install-info %{_infodir}/%{name}.info %{_infodir}/dir || :
-
-%preun
-if [ $1 = 0 ]; then
-  /sbin/install-info --delete %{_infodir}/%{name}.info %{_infodir}/dir || :
-fi
-
 %files -f %{name}.lang
 %doc NEWS README
-%{!?_licensedir:%global license %%doc}
 %license COPYING
 %{_bindir}/*
 %{_mandir}/*/*
-%{_infodir}/diffutils.info*gz
+%{_infodir}/diffutils.info*
 
 %changelog
 * Wed Feb 07 2018 Fedora Release Engineering <releng@fedoraproject.org> - 3.6-4
