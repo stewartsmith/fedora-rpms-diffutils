@@ -2,7 +2,6 @@ Summary: A GNU collection of diff utilities
 Name: diffutils
 Version: 3.7
 Release: 1%{?dist}
-Group: Applications/Text
 URL: http://www.gnu.org/software/diffutils/diffutils.html
 Source: ftp://ftp.gnu.org/gnu/diffutils/diffutils-%{version}.tar.xz
 Patch1: diffutils-cmp-s-empty.patch
