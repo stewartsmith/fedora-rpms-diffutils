@@ -12,6 +12,7 @@ Provides: bundled(gnulib)
 BuildRequires:  gcc
 BuildRequires: help2man
 BuildRequires: autoconf, automake, texinfo
+BuildRequires: make
 
 %description
 Diffutils includes four utilities: diff, cmp, diff3 and sdiff. Diff
