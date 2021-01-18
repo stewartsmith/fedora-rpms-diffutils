@@ -1,15 +1,15 @@
-Summary: A GNU collection of diff utilities
+Summary: GNU collection of diff utilities
 Name: diffutils
 Version: 3.7
 Release: 7%{?dist}
-URL: http://www.gnu.org/software/diffutils/diffutils.html
-Source: ftp://ftp.gnu.org/gnu/diffutils/diffutils-%{version}.tar.xz
+URL: https://www.gnu.org/software/diffutils/diffutils.html
+Source: https://ftp.gnu.org/gnu/diffutils/diffutils-%{version}.tar.xz
 Patch1: diffutils-cmp-s-empty.patch
 Patch2: diffutils-i18n.patch
 Patch3: diffutils-fix-gnulib-tests.patch
 License: GPLv3+
 Provides: bundled(gnulib)
-BuildRequires:  gcc
+BuildRequires: gcc
 BuildRequires: help2man
 BuildRequires: autoconf, automake, texinfo
 BuildRequires: make
