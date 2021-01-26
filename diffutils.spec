@@ -1,7 +1,7 @@
 Summary: GNU collection of diff utilities
 Name: diffutils
 Version: 3.7
-Release: 7%{?dist}
+Release: 8%{?dist}
 URL: https://www.gnu.org/software/diffutils/diffutils.html
 Source: https://ftp.gnu.org/gnu/diffutils/diffutils-%{version}.tar.xz
 Patch1: diffutils-cmp-s-empty.patch
@@ -63,6 +63,9 @@ make check
 %{_infodir}/diffutils.info*
 
 %changelog
+* Tue Jan 26 2021 Fedora Release Engineering <releng@fedoraproject.org> - 3.7-8
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_34_Mass_Rebuild
+
 * Thu Oct  8 2020 Tim Waugh <twaugh@redhat.com> - 3.7-7
 - Fix from gnulib upstream, commit 175e0bc (bug #1863423).
 
