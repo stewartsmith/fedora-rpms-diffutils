@@ -7,6 +7,7 @@ Source: https://ftp.gnu.org/gnu/diffutils/diffutils-%{version}.tar.xz
 Patch1: diffutils-cmp-s-empty.patch
 Patch2: diffutils-i18n.patch
 Patch3: diffutils-fix-gnulib-tests.patch
+Patch4: diffutils-sigstksz.patch
 License: GPLv3+
 Provides: bundled(gnulib)
 BuildRequires: gcc
@@ -37,6 +38,9 @@ Install diffutils if you need to compare text files.
 # Fix from gnulib upstream, commit 175e0bc (bug #1863423).
 %patch3 -p1 -b .fix-gnulib-tests
 
+# Handle SIGSTKSZ no longer being a constant (bug #1943016).
+%patch4 -p1 -b .sigstksz
+
 # Run autoreconf for aarch64 support (bug #925256).
 autoreconf
 
@@ -63,6 +67,9 @@ make check
 %{_infodir}/diffutils.info*
 
 %changelog
+* Mon Apr 12 2021 Tim Waugh <twaugh@redhat.com> - 3.7-9
+- Handle SIGSTKSZ no longer being a constant (bug #1943016).
+
 * Tue Jan 26 2021 Fedora Release Engineering <releng@fedoraproject.org> - 3.7-8
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_34_Mass_Rebuild
 
