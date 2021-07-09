@@ -3,7 +3,12 @@ Name: diffutils
 Version: 3.7
 Release: 9%{?dist}
 URL: https://www.gnu.org/software/diffutils/diffutils.html
-Source: https://ftp.gnu.org/gnu/diffutils/diffutils-%{version}.tar.xz
+Source0: https://ftp.gnu.org/gnu/diffutils/diffutils-%{version}.tar.xz
+Source1: https://ftp.gnu.org/gnu/diffutils/diffutils-%{version}.tar.xz.sig
+# From https://savannah.gnu.org/people/viewgpg.php?user_id=133
+# which is the GPG key for meyering, who is listed as one of the five
+# active maintainers on https://savannah.gnu.org/project/memberlist.php?group=diffutils
+Source2: meyering-key.gpg
 Patch1: diffutils-cmp-s-empty.patch
 Patch2: diffutils-i18n.patch
 Patch3: diffutils-fix-gnulib-tests.patch
@@ -14,6 +19,7 @@ BuildRequires: gcc
 BuildRequires: help2man
 BuildRequires: autoconf, automake, texinfo
 BuildRequires: make
+BuildRequires: gnupg2
 
 %description
 Diffutils includes four utilities: diff, cmp, diff3 and sdiff. Diff
@@ -29,6 +35,7 @@ to merge two files interactively.
 Install diffutils if you need to compare text files.
 
 %prep
+%{gpgverify} --keyring='%{SOURCE2}' --signature='%{SOURCE1}' --data='%{SOURCE0}'
 %setup -q
 # For 'cmp -s', compare file sizes only if both non-zero (bug #563618).
 %patch1 -p1 -b .cmp-s-empty
